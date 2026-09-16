@@ -3,25 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>L'Help Desk Che Cercavi</title>
+  <title>Help Desk Offline</title>
   <link rel="stylesheet" href="assets/css/style.css">
-  <!-- FlexSearch per la ricerca locale -->
+  
   <script src="https://cdn.jsdelivr.net/npm/flexsearch@0.7.31/dist/flexsearch.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 
-  <header>
-    <h1>L'Help Desk Che Cercavi</h1>
-    <p>Cerca risposte nei manuali tecnici senza connessione Internet</p>
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Es. errore E04, configurazione IP..." disabled>
+  <!-- FASE 1: Schermata Iniziale di Caricamento -->
+  <div id="uploadScreen" class="setup-screen">
+    <div class="setup-card">
+      <h2>Benvenuto nell'Help Desk</h2>
+      <p>Carica il manuale in formato PDF per configurare la ricerca offline.</p>
+      
+      <label for="pdfUploader" class="btn-primary">➕ Seleziona Manuale PDF</label>
+      <input type="file" id="pdfUploader" accept="application/pdf" multiple hidden>
+      
+      <div id="uploadStatus" class="status-message"></div>
     </div>
-  </header>
+  </div>
 
-  <main class="container">
-    <section id="status">Caricamento indice in corso...</section>
-    <section id="results" class="results-list"></section>
-  </main>
+  <!-- FASE 2: Schermata di Utilizzo Consumatore (Nascosta all'inizio) -->
+  <div id="appScreen" class="app-screen hidden">
+    <header>
+      <div class="header-content">
+        <h1>Help Desk Manuali</h1>
+        <button id="addMorePdfBtn" class="btn-secondary">+ Aggiungi PDF</button>
+      </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Cerca un problema, errore o procedura...">
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="doc-summary">
+        <h3>Manuale Attivo:</h3>
+        <ul id="docList"></ul>
+      </section>
+
+      <section id="results" class="results-list"></section>
+    </main>
+  </div>
 
   <script src="assets/js/app.js"></script>
 </body>
