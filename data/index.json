@@ -1,0 +1,21 @@
+import pdfplumber
+import json
+import os
+
+pdf_folder = "./pdfs"
+search_data = []
+
+for filename in os.listdir(pdf_folder):
+    if filename.endswith(".pdf"):
+        with pdfplumber.open(os.path.join(pdf_folder, filename)) as pdf:
+            for page_num, page in enumerate(pdf.pages):
+                text = page.extract_text()
+                if text:
+                    search_data.append({
+                        "doc": filename,
+                        "page": page_num + 1,
+                        "content": text
+                    })
+
+with open("index.json", "w", encoding="utf-8") as f:
+    json.dump(search_data, f, ensure_ascii=False, indent=2)
